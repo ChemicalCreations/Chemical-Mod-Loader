@@ -71,7 +71,14 @@ function createObject(model, ...)
         triggerClientEvent("onClientRecieveModelElement", object, model)
         return object
     else
-        return _createObject(model, ...)
+        local object = _createObject(model, ...)
+        if sourceResourceRoot then
+            setElementParent(object, sourceResourceRoot)
+            local f = function() destroyElement(object) end
+            addEventHandler("onResourceStop", sourceResourceRoot, f, false)
+            addEventHandler("onElementDestroy", object, function() removeEventHandler("onResourceStop", sourceResourceRoot, f) end, false)
+        end
+        return object
     end
 end
 
@@ -93,7 +100,14 @@ function createPed(model, ...)
         triggerClientEvent("onClientRecieveModelElement", ped, model)
         return ped
     else
-        return _createPed(model, ...)
+        local ped = _createPed(model, ...)
+        if sourceResourceRoot then
+            setElementParent(ped, sourceResourceRoot)
+            local f = function() destroyElement(ped) end
+            addEventHandler("onResourceStop", sourceResourceRoot, f, false)
+            addEventHandler("onElementDestroy", ped, function() removeEventHandler("onResourceStop", sourceResourceRoot, f) end, false)
+        end
+        return ped
     end
 end
 
@@ -121,7 +135,14 @@ function createVehicle(model, ...)
         triggerClientEvent("onClientRecieveModelElement", vehicle, model)
         return vehicle
     else
-        return _createVehicle(model, ...)
+        local vehicle = _createVehicle(model, ...)
+        if sourceResourceRoot then
+            setElementParent(vehicle, sourceResourceRoot)
+            local f = function() destroyElement(vehicle) end
+            addEventHandler("onResourceStop", sourceResourceRoot, f, false)
+            addEventHandler("onElementDestroy", vehicle, function() removeEventHandler("onResourceStop", sourceResourceRoot, f) end, false)
+        end
+        return vehicle
     end
 end
 Vehicle = createVehicle

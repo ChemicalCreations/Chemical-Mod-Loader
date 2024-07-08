@@ -55,8 +55,8 @@ Future Features:
 
 
 How to Help:
-Join the Discord - discord.com
-Donate to Projects - kofi.com/
+Join the Discord - discord.com/invite/FxHCc7j
+Donate to Projects - kofi.com/chemicalcreations
 
 I'm working on New Weapon IDs as well, with easy customization for sounds, effects, animations, multi-weapon dual wielding and more.
 

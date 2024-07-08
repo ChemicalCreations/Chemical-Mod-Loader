@@ -126,8 +126,12 @@ function loadModelID(id, data)
         data.model_id = engineRequestModel(data.model_type, data.model_type=="object" and 1337 or data.source_id)
         if data.model_id then
             extraModelIDs[data.model_id] = data.model
+            local backup = data.source_id
             addEventHandler("onClientResourceStop", resourceRoot, function()
                 if extraModelIDs[data.model_id] == data.model then
+                    if getElementModel(localPlayer)==data.model_id then
+                        setElementModel(localPlayer, data.source_id or backup)
+                    end
                     engineFreeModel(data.model_id)
                     extraModelIDs[data.model_id] = nil
                 end

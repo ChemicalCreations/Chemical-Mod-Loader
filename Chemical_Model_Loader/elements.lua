@@ -34,10 +34,11 @@ do
 end
 
 local indexProperties = {
+    ["handlingX"] = {animGroup=true, monetary=true, headLight=true, tailLight=true, centerOfMassX=true, centerOfMassY=true, centerOfMassZ=true},
     ["handling"] = {"id", "mass", "turnMass", "dragCoeff", "centerOfMassX", "centerOfMassY", "centerOfMassZ", "percentSubmerged", "tractionMultiplier", "tractionLoss", "tractionBias", "numberOfGears", "maxVelocity", "engineAcceleration", "engineInertia", "driveType", "engineType", "brakeDeceleration", "brakeBias", "ABS", "steeringLock", "suspensionForceLevel", "suspensionDamping", "suspensionHighSpeedDamping", "suspensionUpperLimit", "suspensionLowerLimit", "suspensionFrontRearBias", "suspensionAntiDiveMultiplier", "seatOffsetDistance", "collisionDamageMultiplier", "monetary", "modelFlags", "handlingFlags", "headLight", "tailLight", "animGroup"},
     ["model"] = {"id", "dff", "txd", "category", "handlingID", "name", "animGroup", "class", "frequency", "flags", "comprules", "wheelModelID", "wheelSizeF", "wheelSizeR", "tuner"},
 }
-function getHandlingValue(value, index) -- basically taken from hedit resource
+function getHandlingValue(value, index) -- roughly taken from hedit resource
     local property = indexProperties.handling[index]
     if type(value)~="string" or value=="" then return nil, false end
     if property==nil then
@@ -47,11 +48,11 @@ function getHandlingValue(value, index) -- basically taken from hedit resource
         return value, property
     elseif property=="engineType" then
         value = string.lower(value)
-        value = (value=="p" or value=="d" or value=="e") and value
+        value = (value=="p" and "petrol") or (value=="d" and "diesel") or (value=="e" and "electric")
         return value or nil, value and property or false
     elseif property=="driveType" then
         value = string.lower(value)
-        value = (value=="f" or value=="r" or value=="4") and value
+        value = (value=="f" and "fwd") or (value=="r" and "rwd") or (value=="4" and "awd")
         return value or nil, value and property or false
     elseif property=="modelFlags" or property=="handlingFlags" then
         value = tonumber("0x"..value)
@@ -104,6 +105,11 @@ function patchExtraModelData(id)
                     end
                 end
                 if index==36 then
+                    handling.centerOfMass = {
+                        data.centerOfMassX,
+                        data.centerOfMassY,
+                        data.centerOfMassZ,
+                    }
                     data.handling = handling
                 else
                     data.handling = {}
@@ -275,8 +281,9 @@ function setElementExtraModel(element, model)
             end
             modelElements[element] = model
             data.elements[element] = res
+            local eType = getElementType(element)
             local set = id==_getElementModel(element) or _setElementModel(element, id)
-            if set then -- set correct handling
+            if set and eType=="vehicle" then -- set correct handling
                 for i, v in pairs(data.handling) do setVehicleHandling(element, i, v) end
             end
             triggerClientEvent("onClientRecieveModelElement", element, model)
