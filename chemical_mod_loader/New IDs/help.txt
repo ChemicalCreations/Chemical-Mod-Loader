@@ -1,0 +1,34 @@
+Place models you want to *add* in this folder (New IDs)
+
+
+ It is recommended that you add you new model in sub-folders (tho files will still be read)
+
+
+The following folders (and its sub-folders) will load all models as one type, irrespective of file name:
+  "New IDs/_Vehicles" - Loads all as vehicles (I will add support for vehicle upgrade recconition if enough people find the resource useful)
+  "New IDs/_Objects" - Loads all as obects
+  "New IDs/_Peds" - Loads all as Peds
+  NOTE! - Placing incompatible file types may crash the client when the resource starts
+  Note!!! - These folders are optional and doesn't have to be used, files outside of these folders will load based on id# or file name to the correct element type (or object if not found)
+	- Files with new names will correctly be loaded as vehicles if its handling data can be found in a .txt/.dat/.ide/.cfg file
+
+
+Vehicle Data - such as; Handling, Colors, Wheel Size - are automatically pulled from .txt/.dat/.ide/.cfg files and applied
+	- Note that Carmod data is not natively supported for new models and as such is not currently used
+
+
+Models will use the property of the base_id they are named after (ie infernus.dff/411.dff will load with the handling of the Infernus unless a .txt file is used)
+  - You can specify the base_id of all files in a folder by ending it with the desired base_id in brackets ie: "Fast Cars (411)" or "Nice Cars (Sultan)"
+  - This effect also applies the files in its sub-folder and can be reverted to normal with empty brackets ie: "Other Cars ()"
+
+The Name and id_name of the new model in mta is based on the file_name, folder_name and/or if the name is already taken.
+  - ie: file="New IDs/Fast Cars (411)/Jester.dff" -- id_name="fast_cars_jester" -- name="Fast Cars (Jester)"  ------ Note the base_id will not be in the name
+  - ie: file="New IDs/Banshee.dff" --  id_name="banshee_1" -- name="Banshee (1)"  ------ Note that the number is because banshee is already a default model
+
+
+Future Features:
+  Car Mods support for new vehicles - Allow the use of car mods on new vehicles
+  Vehicle Specific mods - Support unique car mods for new vehicles
+  Animation Files import - Automatically add or replace player .ifp
+  Mod Manager Menu - For setting the id_name and id_number of new models
+  Vehicle Functions support - Support for Folding headlights etc on new models

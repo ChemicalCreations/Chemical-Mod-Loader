@@ -1,0 +1,25 @@
+<meta>
+	<info author="Dark Chemical" version="2.0" type="script" name="Chemical Mod Manager" description="Automatically Add or Replace Models for your MTA Sever"/>
+    <min_mta_version client="1.6" server="1.6.0-9.22470" />
+	
+	<include resource="Chemical_Model_Loader"/>
+
+	<script src="import_chemical_models.lua" type="shared" cache="false"/>
+	<script src="models.lua" type="server"/>
+	<script src="server.lua" type="server"/>
+	<script src="client.lua" type="client" cache="false"/>
+	
+	<file src="New IDs/**/*.dff"/>
+	<file src="New IDs/**/*.DFF"/>
+	<file src="New IDs/**/*.txd"/>
+	<file src="New IDs/**/*.TXD"/>
+	<file src="New IDs/**/*.col"/>
+	<file src="New IDs/**/*.COL"/>
+	
+	<file src="Replace IDs/**/*.dff"/>
+	<file src="Replace IDs/**/*.DFF"/>
+	<file src="Replace IDs/**/*.txd"/>
+	<file src="Replace IDs/**/*.TXD"/>
+	<file src="Replace IDs/**/*.col"/>
+	<file src="Replace IDs/**/*.COL"/>
+</meta>

@@ -1,0 +1,9 @@
+Place models you want to *replace* in this folder (Replace IDs)
+
+Feel free to create sub-folders that files will still be read
+
+File names must match the GTASA id name or mta id number to be replaced
+
+If multiple files have the same name, then one will be used (depending on folder name)
+
+You can place .txt/.dat/.ide/.cfg files with vehicle data to be imported

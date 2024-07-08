@@ -1,0 +1,60 @@
+<meta>
+  <info author="Markland (Chemical Creations) Poyser" version="1.0" type="script" name="Extra Models" description="Allows new models to be added and synced between server and client"/>
+	<min_mta_version client="1.6.0-9.21695" server="1.5.6"/>
+	<download_priority_group>10</download_priority_group>
+	
+	<script src="extraIDs.lua" type="server"/>
+	<script src="elements.lua" type="server"/>
+	<script src="server.lua" type="server"/>
+	<script src="client.lua" type="client" cache="false"/>
+
+
+	<export function="addModelID" type="server"/>
+	<export function="removeModelID" type="server"/>
+	<export function="setModelHandling" type="server"/>
+	<export function="getExtraModelsData" type="server"/>
+
+	<export function="getExports" type="shared"/>
+	<export function="getExtraModels" type="shared"/>
+	<export function="getModelSourceID" type="shared"/>
+	<export function="Vehicle" type="shared"/>
+	<export function="getElementModel" type="shared"/>
+	<export function="setElementModel" type="shared"/>
+	<export function="createPed" type="shared"/>
+	<export function="createObject" type="shared"/>
+	<export function="createVehicle" type="shared"/>
+	<export function="cloneElement" type="shared"/>
+	<export function="getModelHandling" type="shared"/>
+	<export function="getOriginalHandling" type="shared"/>
+	<export function="getVehicleModelFromName" type="shared"/>
+	<export function="getVehicleName" type="shared"/>
+	<export function="getVehicleNameFromModel" type="shared"/>
+
+	<export function="getModelGTAID" type="client"/>
+	<export function="getVehicleModelDummyDefaultPosition" type="client"/>
+	<export function="getVehicleModelDummyPosition" type="client"/>
+	<export function="setVehicleModelDummyPosition" type="client"/>
+	<export function="getVehicleModelExhaustFumesPosition" type="client"/>
+	<export function="setVehicleModelExhaustFumesPosition" type="client"/>
+	<export function="getVehicleModelWheelSize" type="client"/>
+	<export function="setVehicleModelWheelSize" type="client"/>
+	<export function="engineGetModelFlags" type="client"/>
+	<export function="engineResetModelFlags" type="client"/>
+	<export function="engineSetModelFlags" type="client"/>
+	<export function="engineSetModelFlag" type="client"/>
+	<export function="engineGetModelIDFromName" type="client"/>
+	<export function="engineGetModelLODDistance" type="client"/>
+	<export function="engineResetModelLODDistance" type="client"/>
+	<export function="engineSetModelLODDistance" type="client"/>
+	<export function="engineGetModelNameFromID" type="client"/>
+	<export function="engineGetModelPhysicalPropertiesGroup" type="client"/>
+	<export function="engineResetModelPhysicalPropertiesGroup" type="client"/>
+	<export function="engineSetModelPhysicalPropertiesGroup" type="client"/>
+	<export function="engineGetModelTextureNames" type="client"/>
+	<export function="engineGetModelTextures" type="client"/>
+	<export function="engineGetModelTXDID" type="client"/>
+	<export function="engineResetModelTXDID" type="client"/>
+	<export function="engineSetModelTXDID" type="client"/>
+	<export function="engineGetModelVisibleTime" type="client"/>
+	<export function="engineSetModelVisibleTime" type="client"/>
+</meta>
