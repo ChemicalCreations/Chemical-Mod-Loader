@@ -1,5 +1,6 @@
-Add/Replace New Model IDs Including Vehicle Data
-*as simply as placing a file in a folder
+Add/Replace New Model IDs Including Vehicle Data 
+ 
+ *as simply as placing a file in a folder
 
 About Resource:
 This resource allows you to add new Vehicles, Peds and Object models to your server without replacing existing ones, with consistent IDs shared both client and serverside.  This consistency is even supported in event calls, convenient for  players and devs alike. 
