@@ -299,7 +299,7 @@ function applyAnimation(leaf)
 			return
 		end
 	end
-	server.setPedAnimation(localPlayer, leaf.parent.name, leaf.name, true, true)
+	server.setPedAnimation(localPlayer, leaf.parent.name, leaf.name, -1, true)
 end
 
 function stopAnimation()
@@ -355,7 +355,7 @@ function animCmd(command, lib, name)
 		errMsg('This animation may not be set by command')
 		return
 	end
-	server.setPedAnimation(localPlayer, lib, name, true, true)
+	server.setPedAnimation(localPlayer, lib, name, -1, true)
 end
 addCommandHandler('anim', animCmd)
 
