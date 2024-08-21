@@ -15625,6 +15625,9 @@ do
     for i=0, 20000 do
         if data[i] then data[data[i]] = i end
     end
+    for i=30000, 40000 do
+        if data[i] then data[data[i]] = i end
+    end
 end
 
 

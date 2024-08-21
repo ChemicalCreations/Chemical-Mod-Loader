@@ -455,8 +455,12 @@ do -- autoLoad
         do -- replace
             local files, loaded = checkFiles("Replace IDs", true, {[".txt"]=true,[".dff"]=true,[".txd"]=true,[".col"]=true,})
             for path, info in pairs(loaded) do
-                for id, id_dff in pairs(info.dff or {}) do
-                    local dff = id_dff
+				local list = {}
+                for id in pairs(info.dff or {}) do list[id] = true end
+                for id in pairs(info.txd or {}) do list[id] = true end
+                for id in pairs(info.col or {}) do list[id] = true end
+                for id in pairs(list) do
+                    local dff = (info.dff and info.dff[id])
                     local txd = (info.txd and info.txd[id])
                     local col = (info.col and info.col[id])
                     -- make propper id

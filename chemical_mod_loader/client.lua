@@ -2,7 +2,7 @@ addEvent("onClientRecieveReplacementModels", true)
 
 local mods = {} 
 
-addEventHandler("onClientRecieveReplacementModels", root, function(replacements)
+function loadModelLists(replacements)
     for id, data in pairs(replacements) do -- add
         local mod = mods[id] or {}
         if data.col then
@@ -44,8 +44,13 @@ addEventHandler("onClientRecieveReplacementModels", root, function(replacements)
         end
     end
     mods = replacements
-end)
+end
+addEventHandler("onClientRecieveReplacementModels", root, loadModelLists)
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
     triggerServerEvent("onPlayerRequestReplacementModels", localPlayer)
 end)
+
+addEventHandler("onClientResourceStop", resourceRoot, function()
+    loadModelLists({})
+end, false)
