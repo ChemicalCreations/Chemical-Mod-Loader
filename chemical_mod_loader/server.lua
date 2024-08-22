@@ -183,7 +183,7 @@ do -- autoLoad
     local checkFiles
     function checkFiles(dir, subfolders, types, loaded)
         loaded = loaded or {}
-        local files = pathListDir(dir)
+        local files = pathIsDirectory(dir) and pathListDir(dir)
         for i, path in pairs(files) do
             path = string.lower(path)
             local item = dir.."/"..path
