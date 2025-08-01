@@ -13,6 +13,24 @@ function getModelSourceID(model)
     return extraIDs[model] and extraIDs[model].source_id or model
 end
 
+function getExtraModelID(model)
+    model = type(model)=="string" and getFormatedNameString(model) or model
+	if extraIDs[model] then
+		return extraIDs[model].model
+	else
+		return false
+	end
+end
+
+function getExtraModelName(model)
+    model = type(model)=="string" and getFormatedNameString(model) or model
+	if extraIDs[model] then
+		return extraIDs[model].name
+	else
+		return false
+	end
+end
+
 local _cloneElement = cloneElement
 function cloneElement(element)
     if modelElements[element] then

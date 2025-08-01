@@ -1,7 +1,8 @@
 do -- Import functions
-    local r, f = getResourceFromName("Chemical_Model_Loader")
+    local name = "Chemical_Model_Loader"
+    local r, f = getResourceFromName(name)
     function f()
-        r = r or getResourceFromName("Chemical_Model_Loader")
+        r = r or getResourceFromName(name)
         for i, v in pairs(call(r, "getExports")) do
             _G[v] = function(...) return call(r, v, ...) end
         end
@@ -9,7 +10,7 @@ do -- Import functions
     if getResourceState(r)=="running" then
         f()
     else
-        print("please set resource 'Chemical_Model_Loader' to run on server startup")
+        print("please set resource '"..name.."'' to run on server startup")
         setTimer(f, 1, 1)
     end
 end

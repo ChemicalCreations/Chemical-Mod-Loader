@@ -65,6 +65,13 @@ function getHandlingValue(value, index) -- roughly taken from hedit resource
     return nil, false
 end
 
+function getFormatedNameString(name)
+    if type(name)=="string" then
+        name = string.lower(name)
+        return string.gsub(name, "[%s%W]+", "_")
+    end
+end
+
 function patchExtraModelData(id)
     local data = extraIDs[id]
     assert(data)
@@ -73,6 +80,7 @@ function patchExtraModelData(id)
     local t = type(id)
     name = t=="string" and id or data.name or getExtraPotentialName(data)
     model = t=="number" and id or data.model or getExtraPotentialID()
+    name = name and getFormatedNameString(name) or name
     if name and model then
         if extraIDs[name] and extraIDs[name]~=data then outputDebugString("Conflicting data entry with id name: "..tostring(name), 2) end
         if extraIDs[model] and extraIDs[model]~=data then outputDebugString("Conflicting data entry with id model: "..tostring(model), 2) end
@@ -155,11 +163,12 @@ function removeModelID(id)
     end
 end
 function addModelID(id, data)
-    assert(type(id)=="number" or type(id)=="string")
+    local idType = type(id)
+    assert(idType=="number" or idType=="string")
     assert(id==id and id~=1/0)
     assert(type(data)=="table")
-    local name = type(id)=="string" and id or data.name
-    local model = type(id)=="number" and id or data.model
+    local name = idType=="string" and id or data.name
+    local model = idType=="number" and id or data.model
     local announce = false
     if sourceResourceRoot and extraIDs[id] then
         local name = getResourceName(sourceResource)
