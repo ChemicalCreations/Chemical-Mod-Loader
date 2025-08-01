@@ -3,8 +3,9 @@ addEvent("onPlayerRequestReplacementModels", true)
 addEventHandler("onResourceStart", resourceRoot, function()
     local list = {}
     for id, data in pairs(newModels) do
-        local model = addModelID(id, data)
+        local model, name = addModelID(id, data)
         if not model then outputDebugString("Loading Vehicle Error: "..tostring(id), 2) end
+        --print("ADDING MODEL:", model, name)
     end
 end)
 
@@ -183,9 +184,9 @@ do -- autoLoad
     local checkFiles
     function checkFiles(dir, subfolders, types, loaded)
         loaded = loaded or {}
-        local files = pathIsDirectory(dir) and pathListDir(dir)
+        local files = pathListDir(dir)
         for i, path in pairs(files) do
-            path = string.lower(path)
+            local _path = string.lower(path)
             local item = dir.."/"..path
             local isFolder = pathIsDirectory(item)
             if isFolder and subfolders then
@@ -322,11 +323,20 @@ do -- autoLoad
                 local idn = tonumber(id)
                 local source_id
                 data.source_id = nil
+                do -- get ingame id
+                    local s, e = string.find(id, "%([%w_]*%)$")
+                    local base = s and string.sub(id, s+1, e-1)
+                    local basen = tonumber(base)
+                    if basen then
+                        --print(id, "K:", base)
+                        data.model = basen
+                    end
+                end
                 for value in string.gmatch(path, "/[^/]+")  do
                     local s, e = string.find(value, "%([%w_]*%)$")
                     local base = s and string.sub(value, s+1, e-1)
                     local basen = tonumber(base)
-                    --print("G:", value, base)
+                    --print(id, "G:", value, base)
                     if basen then
                         source_id = (listVehicle[basen] and basen) or (listPed[basen] and basen) or (listObject[basen] and basen)
                     elseif base=="" then
@@ -390,6 +400,16 @@ do -- autoLoad
                 data.model_dff = data.model_dff or id_dff
                 data.model_txd = data.model_txd or (info.txd and info.txd[id])
                 data.model_col = data.model_col or (info.col and info.col[id])
+                if info.txd and not data.model_txd then -- pull from indirect .txd
+                    local txd, n = nil, 0
+                    for txdName, txdPath in pairs(info.txd) do
+                        local s, e = string.find(id, txdName)
+                        if s==1 and e>n and not tonumber(txdName) then
+                            txd, n = txdPath, e
+                        end
+                    end
+                    if txd then  data.model_txd = txd end
+                end
                 -- make propper id
                 local idName = (idn and (listVehicle[idn] or listPed[idn] or listObject[idn])) or id
                 local usedName = getVehicleModelFromName(idName) or listVehicle[idName] or listPed[idName] or listObject[idName]
@@ -403,7 +423,7 @@ do -- autoLoad
                 if usedName then
                     local bigName = string.upper(string.sub(idName, 1, 1))..string.sub(idName, 2, -1)
                     local folder = info.folder and string.gsub(info.folder, "%s*%([%w_]*%)$", "")
-                    data.friendly_name = folder and folder.." ("..bigName..")" or bigName
+                    data.friendly_name = folder and bigName.." ("..folder..")" or bigName
                     idName = folder and (string.gsub(folder, "[^%w]", "_").."_"..idName) or idName
                     usedName = getVehicleModelFromName(idName) or listVehicle[idName] or listPed[idName] or listObject[idName]
                     if usedName and mods[dff] and data.model_txd then
@@ -436,7 +456,7 @@ do -- autoLoad
                 data.friendly_name = string.upper(string.sub(data.friendly_name, 1, 1))..string.sub(data.friendly_name, 2, -1)
                 data.source_id = source_id or data.source_id or typeBase[eType]
                 if data.model_txd and data.source_id then
-                    --print("LOADING:", eType, id, data.friendly_name, idName)
+                    print("LOADING:", eType, id, data.friendly_name, idName)
                     newMods[dff] = true
                     mods[dff] = mods[dff] or {
                         dff = data.model_dff,
@@ -464,7 +484,7 @@ do -- autoLoad
                     local txd = (info.txd and info.txd[id])
                     local col = (info.col and info.col[id])
                     -- make propper id
-                    local idn = tonumber(id) or id
+                    local idn = tonumber(id) or string.lower(id)
                     local model = listVehicle[idn] or listPed[idn] or listObject[idn]
                     if model then
                         model = tonumber(model) or idn

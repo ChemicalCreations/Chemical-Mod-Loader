@@ -1,5 +1,5 @@
 <meta>
-	<info author="Dark Chemical" version="2.0" type="script" name="Chemical Mod Manager" description="Automatically Add or Replace Models for your MTA Sever"/>
+	<info author="Dark Chemical" version="2.0.1" type="script" name="Chemical Mod Manager" description="Automatically Add or Replace Models for your MTA Sever"/>
     <min_mta_version client="1.6" server="1.6.0-9.22470" />
 	
 	<include resource="Chemical_Model_Loader"/>

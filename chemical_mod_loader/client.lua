@@ -3,6 +3,7 @@ addEvent("onClientRecieveReplacementModels", true)
 local mods = {} 
 
 function loadModelLists(replacements)
+    local m = {}
     for id, data in pairs(replacements) do -- add
         local mod = mods[id] or {}
         if data.col then
@@ -38,8 +39,8 @@ function loadModelLists(replacements)
                 engineRestoreModel(id)
             end
             if data.wheelSize then
-                setVehicleModelWheelSize(id, "front_axle", wheelSize[1])
-                setVehicleModelWheelSize(id, "rear_axle", wheelSize[2])
+                setVehicleModelWheelSize(id, "front_axle", data.wheelSize[1])
+                setVehicleModelWheelSize(id, "rear_axle", data.wheelSize[2])
             end
         end
     end
