@@ -12,6 +12,7 @@ addEvent("onClientRecieveModelElement", true)
 addEvent("onClientRecieveVehicleHandling", true)
 
 
+
 local _getElementModel, _setElementModel = getElementModel, setElementModel
 addEventHandler("onClientElementDestroy", root, function()
 	local element = source
@@ -213,9 +214,9 @@ addEventHandler("onClientRecieveModelElementID", root, loadModelID, false)
 addEventHandler("onClientRecieveModelElementIDs", root, function(IDs)
 	for id, data in pairs(IDs) do
 		if type(id)=="number" then
-			loadModelID(id, data)
+			--loadModelID(id, data)
 		end
-	end                  
+	end
 end, false)
 
 addEventHandler("onClientRecieveModelElements", root, function(elements)
@@ -335,6 +336,28 @@ end
 
 addEventHandler("onClientResourceStart", resourceRoot, function()
 	triggerServerEvent("onPlayerRequestExtraModelsStart", localPlayer)
+	local database_element
+	for i, element in pairs(getElementsByType("database", resourceRoot)) do
+		if "chemical_extra_models"==getElementID(element) then
+			database_element = element
+			break
+		end
+	end
+	for id_string, data in pairs(getAllElementData(database_element)) do
+		local id = tonumber(id_string)
+		iprint("models", id, id_string, data)
+		if id then -- add/remove model
+			loadModelID(id, data)
+			--triggerEvent("onClientRecieveModelElementID", root, id, data)
+		end
+	end
+	addEventHandler("onClientElementDataChange", database_element, function(id_string, old_data, data)
+		local id = tonumber(idstring)
+		if id then
+			loadModelID(id, data)
+			--triggerEvent("onClientRecieveModelElementID", root, id, data)
+		end
+	end, false)
 end, false)
 
 
@@ -445,7 +468,7 @@ function createVehicle(model, ...)
 	local data = extraIDs[model]
 	if data then
 		if type(model)~="number" then return false end
-		local vehicle = _createVehicle(data.source_id, ...)
+		local vehicle = _createVehicle(data.model_id, ...)
 		if not vehicle then outputDebugString("Unable to create client vehicle > Name:"..tostring(data.name)..' > Model:'..tostring(data.model)..' > Source Model:'..tostring(data.source_id)) return false end
 		addElementRemover(sourceResourceRoot, vehicle)
 		modelElements[vehicle] = model

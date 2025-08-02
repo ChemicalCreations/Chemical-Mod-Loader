@@ -7,7 +7,7 @@ addEvent("onModelAdd")
 addEvent("onModelRemove")
 addEvent("onPlayerRequestExtraModelsStart", true)
 
-
+local database_element = createElement("database", "chemical_extra_models")
 
 do
     local idn = extraStartID
@@ -149,8 +149,9 @@ function removeModelID(id)
         local id = data.model
         if extraIDs[name]==data then
             triggerEvent("onModelRemove", root, id, data.model_type)
+			setElementData(database_element, tostring(id), false, true, "deny")
             for player in pairs(readyPlayers) do
-                triggerClientEvent(player, "onClientRecieveModelElementID", root, id, false)
+                --triggerClientEvent(player, "onClientRecieveModelElementID", root, id, false)
             end
             extraIDs[id] = nil
             extraIDs[name] = nil
@@ -206,8 +207,9 @@ function addModelID(id, data)
     extraIDs[id] = data
     local id, name = patchExtraModelData(id)
     if id and name then
+		setElementData(database_element, tostring(id), data, true, "deny")
         for player in pairs(readyPlayers) do
-            triggerClientEvent(player, "onClientRecieveModelElementID", root, id, data)
+            --triggerClientEvent(player, "onClientRecieveModelElementID", root, id, data)
         end
         triggerEvent("onModelAdd", root, id, data.model_type)
     end
@@ -252,7 +254,7 @@ addEventHandler("onPlayerRequestExtraModelsStart", root, function()
     local player = client
     if readyPlayers[player] then return kickPlayer(player) end
     readyPlayers[player] = true
-    triggerClientEvent(player, "onClientRecieveModelElementIDs", root, extraIDs)
+    --triggerClientEvent(player, "onClientRecieveModelElementIDs", root, extraIDs)
     triggerClientEvent(player, "onClientRecieveModelElements", root, modelElements)
 end)
 
