@@ -12,7 +12,6 @@ addEvent("onClientRecieveModelElement", true)
 addEvent("onClientRecieveVehicleHandling", true)
 
 
-
 local _getElementModel, _setElementModel = getElementModel, setElementModel
 addEventHandler("onClientElementDestroy", root, function()
 	local element = source
@@ -169,14 +168,17 @@ function loadModelID(id, data)
 			if getResourceFromName(data.resource) or not data.resourceRoot then
 				if data.model_col then
 					local model = engineLoadCOL(data.model_col)
+					data.loaded_col = model
 					if model then engineReplaceCOL(model, data.model_id) end
 				end
 				if data.model_txd then
 					local model = engineLoadTXD(data.model_txd)
+					data.loaded_txd = model
 					if model then engineImportTXD(model, data.model_id) end
 				end
 				if data.model_dff then
 					local model = engineLoadDFF(data.model_dff)
+					data.loaded_dff = model
 					if model then engineReplaceModel(model, data.model_id) end
 				end
 			end
@@ -216,7 +218,7 @@ addEventHandler("onClientRecieveModelElementIDs", root, function(IDs)
 		if type(id)=="number" then
 			--loadModelID(id, data)
 		end
-	end
+	end                  
 end, false)
 
 addEventHandler("onClientRecieveModelElements", root, function(elements)
@@ -380,6 +382,24 @@ end
 
 function getModelSourceID(model)
 	return extraIDs[model] and extraIDs[model].source_id or model
+end
+
+function getModelCOL(model)
+	local data = extraIDs[model]
+	if data then return data.model_col, data.loaded_col end
+	return false
+end
+
+function getModelTXD(model)
+	local data = extraIDs[model]
+	if data then return data.model_txd, data.loaded_txd end
+	return false
+end
+
+function getModelDFF(model)
+	local data = extraIDs[model]
+	if data then return data.model_dff, data.loaded_dff end
+	return false
 end
 
 function addElementRemover(res, element)

@@ -1,7 +1,7 @@
 <meta>
   <info author="Markland (Chemical Creations) Poyser" version="1.0.0" type="script" name="Extra Models" description="Allows new models to be added and synced between server and client"/>
 	<min_mta_version client="1.6.0-9.21695" server="1.5.6"/>
-	<download_priority_group>10</download_priority_group>
+	<download_priority_group>1000</download_priority_group>
 	
 	<script src="extraIDs.lua" type="server"/>
 	<script src="elements.lua" type="server"/>
@@ -13,6 +13,9 @@
 	<export function="removeModelID" type="server"/>
 	<export function="setModelHandling" type="server"/>
 	<export function="getExtraModelsData" type="server"/>
+	<export function="getExtraModelID" type="server"/>
+	<export function="getExtraModelName" type="server"/>
+	<export function="setModelHandling" type="server"/>
 
 	<export function="getExports" type="shared"/>
 	<export function="getExtraModels" type="shared"/>
@@ -31,6 +34,9 @@
 	<export function="getVehicleNameFromModel" type="shared"/>
 
 	<export function="getModelGTAID" type="client"/>
+	<export function="getModelCOL" type="client"/>
+	<export function="getModelTXD" type="client"/>
+	<export function="getModelDFF" type="client"/>
 	<export function="getVehicleModelDummyDefaultPosition" type="client"/>
 	<export function="getVehicleModelDummyPosition" type="client"/>
 	<export function="setVehicleModelDummyPosition" type="client"/>

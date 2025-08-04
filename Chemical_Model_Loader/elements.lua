@@ -3,11 +3,12 @@ extraIDs = {}
 modelElements = {} -- table of custom elements
 
 local readyPlayers = {}
+local database_element = createElement("database", "chemical_extra_models")
+
 addEvent("onModelAdd")
 addEvent("onModelRemove")
 addEvent("onPlayerRequestExtraModelsStart", true)
 
-local database_element = createElement("database", "chemical_extra_models")
 
 do
     local idn = extraStartID
@@ -241,6 +242,14 @@ function getExtraModelsData()
     end
     return models
 end
+
+addEventHandler("onElementDataChange", database_element, function(key, value_old, value_new)
+	if sourceResource~=resourceRoot then
+		-- revert
+		setElementData(database_element, key, value_old)
+		if client then kickPlayer(client) end
+	end
+end, false, "high")
 
 addEventHandler("onResourceStart", resourceRoot, function()
     local list = {}
