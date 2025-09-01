@@ -4,6 +4,8 @@ modelElements = {} -- table of custom elements
 
 local readyPlayers = {}
 local database_element = createElement("database", "chemical_extra_models")
+--database.models = createElement("database", "chemical_extra_models")
+--database.elements = createElement("database", "chemical_extra_model_elements")
 
 addEvent("onModelAdd")
 addEvent("onModelRemove")
@@ -244,7 +246,7 @@ function getExtraModelsData()
 end
 
 addEventHandler("onElementDataChange", database_element, function(key, value_old, value_new)
-	if sourceResource~=resourceRoot then
+	if sourceResource~=resource then
 		-- revert
 		setElementData(database_element, key, value_old)
 		if client then kickPlayer(client) end

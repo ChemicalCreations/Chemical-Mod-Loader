@@ -8,7 +8,7 @@ function loadModelLists(replacements)
         local mod = mods[id] or {}
         if data.col then
             local model = engineLoadCOL(data.col)
-            if model then engineReplaceCOL(model, _id) end
+            if model then engineReplaceCOL(model, id) end
         elseif mod.col then
             engineRestoreCOL(id)
         end
