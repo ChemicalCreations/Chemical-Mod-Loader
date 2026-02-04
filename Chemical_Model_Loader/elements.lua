@@ -94,8 +94,9 @@ function patchExtraModelData(id)
             local name = getResourceName(sourceResource)
             data.resource = name
             if name then
-                data.model_dff = ":"..name.."/"..data.model_dff
-                data.model_txd = ":"..name.."/"..data.model_txd
+                if data.model_dff then data.model_dff = ":"..name.."/"..data.model_dff end
+                if data.model_txd then data.model_txd = ":"..name.."/"..data.model_txd end
+                if data.model_col then data.model_col = ":"..name.."/"..data.model_col end
             end
         end
         data.model_id = nil
@@ -239,6 +240,7 @@ function getExtraModelsData()
                 type = data.model_type,
                 dff = data.model_dff,
                 txd = data.model_txd,
+                col = data.model_col,
             }
         end
     end
